@@ -21,6 +21,7 @@ const mockPlaces = [
   },
 ];
 
+// ✅ REQUIRED for static export with dynamic routes
 export async function generateStaticParams() {
   return mockPlaces.map((place) => ({
     id: place.id,

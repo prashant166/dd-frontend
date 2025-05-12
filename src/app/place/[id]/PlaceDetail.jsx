@@ -2,13 +2,11 @@ import Image from "next/image";
 import AreaSection from "./AreaSection";
 import ReviewsSection from "./ReviewSection";
 import MockSidebar from "./MockSidebar";
-import { useState } from "react";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 
 
 export default function PlaceDetail({ place }) {
-  const [liked, setLiked] = useState(false);
   return (
     <div className="max-w-6xl mx-auto px-4 lg:flex gap-8 py-10 mt-24">
       {/* Left Main Content */}

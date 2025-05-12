@@ -1,15 +1,19 @@
-
+// app/place/[id]/page.jsx
 import dynamic from "next/dynamic";
 
-// Lazy load your UI logic from index.jsx
+// Dynamically import the real component
 const PlaceIndex = dynamic(() => import("./index"));
 
-// Optional metadata (SEO, title, etc.)
+// Re-export generation helpers
+export { generateStaticParams } from "./index";
+
+// Metadata (optional)
 export const metadata = {
   title: "Place Details | DailyDilli",
   description: "Explore beautiful places in Delhi with detailed insights",
 };
 
-export default function Page() {
-  return <PlaceIndex />;
+// ✅ Pass `params` to the imported component
+export default function Page({ params }) {
+  return <PlaceIndex params={params} />;
 }

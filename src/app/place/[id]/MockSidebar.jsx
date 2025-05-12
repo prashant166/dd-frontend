@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
