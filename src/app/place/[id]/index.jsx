@@ -1,9 +1,6 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import PlaceDetail from "./PlaceDetail";
 import StaticHeader from "../../components/StaticHeader";
-import Footer from "../../components/Footer"; // Assumed path
+import Footer from "../../components/Footer";
 
 const mockPlaces = [
   {
@@ -24,9 +21,14 @@ const mockPlaces = [
   },
 ];
 
-export default function PlaceIndex() {
-  const { id } = useParams();
-  const place = mockPlaces.find((p) => p.id === id);
+export async function generateStaticParams() {
+  return mockPlaces.map((place) => ({
+    id: place.id,
+  }));
+}
+
+export default function Page({ params }) {
+  const place = mockPlaces.find((p) => p.id === params.id);
 
   if (!place) return <p className="text-center mt-20">Place not found</p>;
 

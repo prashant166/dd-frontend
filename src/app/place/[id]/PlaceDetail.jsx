@@ -65,7 +65,8 @@ export default function PlaceDetail({ place }) {
             <p className="font-semibold">₹50</p>
           </div>
             <div className="bg-orange-50 p-5 rounded-lg shadow-sm border border-orange-200 col-span-1 sm:col-span-2">
-  <p className="text-sm font-semibold text-orange-600 mb-2">🗣️ Our contributor said:</p>
+  <p className="text-orange-600 font-semibold text-sm mb-2
+">🗣️ Our contributor said:</p>
   <p className="text-gray-800 text-sm mb-3">
     “This spot is perfect for unwinding. You’ll love the calmness, the food around, and how walkable it all is.”
   </p>

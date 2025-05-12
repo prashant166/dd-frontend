@@ -1,5 +1,6 @@
 "use client";
 import { FaRobot } from "react-icons/fa";
+import Link from "next/link";
 
 export default function BannerCard() {
   return (
@@ -19,6 +20,7 @@ export default function BannerCard() {
 
         {/* Right-side AI Button */}
         <div className="absolute top-7/8 right-12 -translate-y-1/2 z-10">
+          <Link href="/trip-planning">
           <button className="flex items-center gap-2 bg-white text-black text-lg font-semibold px-4 py-2 rounded-full shadow hover:bg-gray-100 transition">
           <img
   src="/images/ai-icon.svg"
@@ -28,6 +30,7 @@ export default function BannerCard() {
 
             Start a trip with AI
           </button>
+          </Link>
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaLandmark, FaPaw, FaUtensils, FaTree, FaHeart } from "react-icons/fa";
 import { GiShoppingBag } from "react-icons/gi";
 import { MdFamilyRestroom } from "react-icons/md";
+import Link from "next/link";
 
 
 const tabs = [
@@ -67,9 +68,11 @@ export default function HeroSearchSection() {
             placeholder="Places to go, things to do, hotels..."
             className="flex-1 outline-none bg-transparent text-sm placeholder-gray-500"
           />
-          <button className="ml-2 bg-orange-700 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-full transition">
-            Search
-          </button>
+          <Link href="/search">
+  <button className="ml-2 bg-orange-700 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-full transition">
+    Search
+  </button>
+</Link>
         </div>
       </div>
       <p className="text-sm text-gray-500 mt-4 italic">
