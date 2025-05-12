@@ -54,76 +54,68 @@ const attractions = [
     image: "/images/sunder.jpg",
   },
 ];
-
 export default function AreaSection({ coordinates }) {
   return (
-    <div className="mt-24 px-4 lg:px-10 max-w-7xl mx-auto">
-      <div className="flex flex-col lg:flex-row gap-10">
-        {/* LEFT SECTION */}
-        <div className="flex-1">
-          <h2 className="text-xl font-bold mb-2">📍 The area</h2>
-          <p className="mb-1 font-medium">Mathura Road, New Delhi 110003 India</p>
-          <p className="mb-4 text-sm text-gray-600">Neighbourhood: Minto Road</p>
+    <div className="mt-16 px-4 lg:px-10 max-w-7xl mx-auto">
+      <h2 className="text-xl font-bold mb-2">📍 The Area</h2>
+      <p className="mb-1 font-medium">Mathura Road, New Delhi 110003 India</p>
+      <p className="mb-4 text-sm text-gray-600">Neighbourhood: Minto Road</p>
 
-          <div className="flex gap-4 mb-6 text-sm font-medium">
-            <a href="#" className="text-blue-600 hover:underline">Visit website</a>
-            <a href="#" className="text-blue-600 hover:underline">Call</a>
-            <a href="#" className="text-blue-600 hover:underline">Email</a>
-          </div>
+      <div className="flex gap-4 mb-6 text-sm font-medium">
+        <a href="#" className="text-blue-600 hover:underline">Visit website</a>
+        <a href="#" className="text-blue-600 hover:underline">Call</a>
+        <a href="#" className="text-blue-600 hover:underline">Email</a>
+      </div>
 
-          <div className="mb-6">
-            <h3 className="font-semibold mb-2">Best nearby</h3>
+      {/* MAP SECTION FIRST */}
+      <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md border mb-10">
+        <iframe
+          width="100%"
+          height="100%"
+          loading="lazy"
+          allowFullScreen
+          className="border-0"
+          src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}&z=15&output=embed`}
+        />
+      </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-              {/* Restaurants */}
+      {/* NEARBY PLACES */}
+      <h3 className="text-lg font-semibold mb-4">✨ Best Nearby</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+        {/* Restaurants */}
+        <div>
+          <p className="text-sm text-gray-600 mb-2 font-medium">🍽️ Restaurants</p>
+          {restaurants.map((r, i) => (
+            <div key={i} className="flex items-start gap-3 mb-4">
+              <Image src={r.image} alt={r.name} width={60} height={60} className="rounded-md object-cover" />
               <div>
-                <p className="text-sm text-gray-600 mb-2">Restaurants</p>
-                {restaurants.map((r, i) => (
-                  <div key={i} className="flex items-start gap-3 mb-4">
-                    <Image src={r.image} alt={r.name} width={60} height={60} className="rounded-md object-cover" />
-                    <div>
-                      <p className="font-semibold">{r.name}</p>
-                      <p className="text-green-700 text-sm">
-                        {r.rating} • ({r.reviews}) • {r.distance}
-                      </p>
-                      <p className="text-sm text-gray-600">{r.tags}</p>
-                    </div>
-                  </div>
-                ))}
-                <a href="#" className="text-sm text-blue-600 hover:underline font-medium">See all</a>
-              </div>
-
-              {/* Attractions */}
-              <div>
-                <p className="text-sm text-gray-600 mb-2">Attractions</p>
-                {attractions.map((a, i) => (
-                  <div key={i} className="flex items-start gap-3 mb-4">
-                    <Image src={a.image} alt={a.name} width={60} height={60} className="rounded-md object-cover" />
-                    <div>
-                      <p className="font-semibold">{a.name}</p>
-                      <p className="text-green-700 text-sm">
-                        {a.rating} • ({a.reviews}) • {a.distance}
-                      </p>
-                      <p className="text-sm text-gray-600">{a.tags}</p>
-                    </div>
-                  </div>
-                ))}
-                <a href="#" className="text-sm text-blue-600 hover:underline font-medium">See all</a>
+                <p className="font-semibold">{r.name}</p>
+                <p className="text-green-700 text-sm">
+                  {r.rating} • ({r.reviews}) • {r.distance}
+                </p>
+                <p className="text-sm text-gray-600">{r.tags}</p>
               </div>
             </div>
-          </div>
+          ))}
+          <a href="#" className="text-sm text-blue-600 hover:underline font-medium">See all</a>
         </div>
 
-        {/* RIGHT SECTION (MAP) */}
-        <div className="w-full lg:w-[420px] h-[500px] rounded-xl overflow-hidden shadow-md">
-          <iframe
-            width="100%"
-            height="100%"
-            loading="lazy"
-            allowFullScreen
-            className="border-0"
-            src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}&z=15&output=embed`}
-          />
+        {/* Attractions */}
+        <div>
+          <p className="text-sm text-gray-600 mb-2 font-medium">📸 Attractions</p>
+          {attractions.map((a, i) => (
+            <div key={i} className="flex items-start gap-3 mb-4">
+              <Image src={a.image} alt={a.name} width={60} height={60} className="rounded-md object-cover" />
+              <div>
+                <p className="font-semibold">{a.name}</p>
+                <p className="text-green-700 text-sm">
+                  {a.rating} • ({a.reviews}) • {a.distance}
+                </p>
+                <p className="text-sm text-gray-600">{a.tags}</p>
+              </div>
+            </div>
+          ))}
+          <a href="#" className="text-sm text-blue-600 hover:underline font-medium">See all</a>
         </div>
       </div>
     </div>

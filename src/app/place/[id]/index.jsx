@@ -11,7 +11,7 @@ const mockPlaces = [
     name: "Mehrauli Archaeological Park",
     description: "A historic site with ruins, greenery, and ancient architecture.",
     locality: "Mehrauli, New Delhi",
-    image: "/images/logo.png",
+    image: "/images/place1.png",
     coordinates: { lat: 28.5206, lng: 77.1855 },
   },
   {
@@ -19,7 +19,7 @@ const mockPlaces = [
     name: "Lodhi Garden",
     description: "A lush garden with tombs from the Lodhi dynasty.",
     locality: "Lutyens' Delhi",
-    image: "/images/lodhi.jpg",
+    image: "/images/place2.png",
     coordinates: { lat: 28.5916, lng: 77.2197 },
   },
 ];
