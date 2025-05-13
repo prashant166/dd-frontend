@@ -4,7 +4,7 @@ import { FaInstagram, FaFacebookF, FaXTwitter, FaYoutube, FaPinterest } from "re
 export default function Footer() {
   return (
     <footer className="bg-gray-100 text-sm text-gray-700 pt-10 pb-6 px-4 mt-12">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
         {/* Column 1 - About */}
         <div>
           <h4 className="font-bold mb-3 text-black">About DailyDilli</h4>
@@ -48,17 +48,17 @@ export default function Footer() {
             </select>
           </div>
           <div>
-            <label className="block text-black font-semibold mb-1">Country</label>
+            <label className="block text-black font-semibold mb-1">City</label>
             <select className="w-full px-3 py-2 border rounded">
-              <option>India</option>
-              <option>United States</option>
+              <option>Delhi</option>
+              {/* <option>United States</option> */}
             </select>
           </div>
         </div>
       </div>
 
       {/* Bottom Section */}
-      <div className="max-w-7xl mx-auto mt-8 border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="max-w-5xl mx-auto mt-8 border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="text-xs text-gray-500 text-center md:text-left">
           © 2025 DailyDilli. All rights reserved.
         </p>
