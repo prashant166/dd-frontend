@@ -11,6 +11,10 @@ export default function AddPlaceStep2({ onBack, onSubmit }) {
   const [bestTime, setBestTime] = useState("");
   const [parking, setParking] = useState(false);
   const [images, setImages] = useState([]);
+  const isFemaleUser = true; // Replace with actual gender check from auth/user state
+const [feltSafe, setFeltSafe] = useState("");
+const [safetyComment, setSafetyComment] = useState("");
+
 
   const handleImageUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -155,7 +159,46 @@ export default function AddPlaceStep2({ onBack, onSubmit }) {
         <label className="text-base">Parking Available</label>
       </div>
 
-      {/* Image Upload */}
+      {/* Safety Feedback for Female Users */}
+{isFemaleUser && (
+  <div className="border-t pt-6 mt-6">
+    <h3 className="text-lg font-semibold mb-4 text-orange-600">
+  Your feedback helps other women feel safe here 💬
+</h3>
+<p className="text-sm text-gray-600 mb-4">
+  (This option is visible to female contributors only.)
+</p>
+
+
+    <div className="mb-4">
+      <label className="block text-base font-medium mb-1">Did you feel safe here?</label>
+      <select
+        value={feltSafe}
+        onChange={(e) => setFeltSafe(e.target.value)}
+        className="w-full border rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-orange-500"
+      >
+        <option value="">Select</option>
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+
+    <div>
+      <label className="block text-base font-medium mb-1">
+        Optional comment or suggestion
+      </label>
+      <textarea
+  value={safetyComment}
+  onChange={(e) => setSafetyComment(e.target.value)}
+  rows={3}
+  placeholder="Leave a tip or reassurance for other solo women – your voice matters"
+  className="w-full border border-gray-300 rounded-md px-4 py-3 text-base resize-none placeholder:text-gray-400"
+/>
+
+    </div>
+  </div>
+)}
+
       
 
       {/* Navigation */}

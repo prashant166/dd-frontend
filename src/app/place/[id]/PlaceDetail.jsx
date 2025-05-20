@@ -4,6 +4,7 @@ import ReviewsSection from "./ReviewSection";
 import MockSidebar from "./MockSidebar";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
+import { FaFemale } from "react-icons/fa";
 
 
 export default function PlaceDetail({ place }) {
@@ -18,9 +19,14 @@ export default function PlaceDetail({ place }) {
       <h1 className="text-3xl font-extrabold">{place.name}</h1>
       <p className="text-sm text-gray-600 mt-2">{place.locality}</p>
     </div>
+    
 
     
   </div>
+  <div className="flex items-center gap-2 text-pink-800 text-sm bg-pink-50 border border-pink-300 rounded-md px-4 py-2 mb-5 max-w-md">
+  <FaFemale className="text-lg" />
+  <span><strong>83%</strong> of women travelers said they felt safe here.</span>
+</div>
 
   {/* Main Image */}
   <div className="w-full rounded-2xl overflow-hidden shadow-sm">

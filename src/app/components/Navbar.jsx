@@ -7,8 +7,14 @@ import EmailLoginDialog from "./EmailLoginDialog";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import JoinDialog from "./JoinDialog";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import UserDropdown from "./UserDropdown"; // adjust path if needed
+
+
 
 export default function Navbar() {
+  const userInfo = useSelector((state) => state.user.userInfo);
+
   const optionsDialog = useRef(null);
   const emailDialog = useRef(null);
   const forgotDialog = useRef(null);
@@ -76,9 +82,17 @@ const closeJoin = () => joinDialog.current?.close();
           <FaGlobeAsia size={16} />
           <span>INR</span>
         </button> */}
-        <button  onClick={openOptions} className="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold cursor-pointer">
-          Sign in
-        </button>
+        {userInfo ? (
+  <UserDropdown />
+) : (
+  <button
+    onClick={openOptions}
+    className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition"
+  >
+    Sign in
+  </button>
+)}
+
       </div>
     </nav>
     <dialog
