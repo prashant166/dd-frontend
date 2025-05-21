@@ -1,11 +1,32 @@
 "use client";
 import Link from "next/link";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { likePlace, unlikePlace } from "../../../redux/slices/likedPlacesSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function PlaceCard({ place }) {
-  const [wishlisted, setWishlisted] = useState(false);
+    const dispatch = useDispatch();
+  const likedPlaces = useSelector((state) => state.likedPlaces.likedPlaces);
+
+  const isLiked = likedPlaces?.some((p) => p.place_id === place.id);
+
+  const [wishlisted, setWishlisted] = useState(isLiked);
+
+  useEffect(() => {
+    setWishlisted(isLiked);
+  }, [isLiked]);
+
+  const handleToggleLike = (e) => {
+    e.preventDefault(); // prevent Link click
+    if (wishlisted) {
+      dispatch(unlikePlace(place.id));
+    } else {
+      dispatch(likePlace(place.id));
+    }
+  };
 
   return (
     <Link href={`/place/${place.id}`} className="block">
@@ -21,10 +42,7 @@ export default function PlaceCard({ place }) {
           />
           {/* Wishlist Icon */}
           <button
-            onClick={(e) => {
-              e.preventDefault(); // prevent link click
-              setWishlisted(!wishlisted);
-            }}
+              onClick={handleToggleLike}
             className="absolute top-2 right-2 bg-white p-2 rounded-full shadow"
           >
             {wishlisted ? (

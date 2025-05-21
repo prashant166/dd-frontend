@@ -14,11 +14,13 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 
 import userReducer from "./slices/userSlice"; // Adjust path if needed
 import placeReducer from "./slices/placeSlice";
+import likedPlacesReducer from "./slices/likedPlacesSlice"
 
 // Combine reducers
 const rootReducer = combineReducers({
   user: userReducer,
-  place: placeReducer
+  place: placeReducer,
+  likedPlaces: likedPlacesReducer,
   // Add other slices here (e.g., org, product, etc.)
 });
 
