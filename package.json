@@ -10,8 +10,12 @@
     "export": "next export"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@heroicons/react": "^2.2.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
+    "@mui/material": "^7.1.0",
+    "@react-google-maps/api": "^2.20.6",
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/postcss": "^4.1.5",
     "axios": "^1.9.0",
@@ -27,7 +31,8 @@
     "redux-persist": "^6.0.0",
     "sonner": "^2.0.3",
     "tailwind-scrollbar-hide": "^2.0.0",
-    "tailwindcss": "^4.1.5"
+    "tailwindcss": "^4.1.5",
+    "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

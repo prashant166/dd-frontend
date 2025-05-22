@@ -32,9 +32,10 @@ export default function AddPlacePage() {
         {step === 1 && <StepOne onNext={handleStep1Submit} />}
         {step === 2 && (
           <StepTwo
-            onBack={() => setStep(1)}
-            onSubmit={handleStep2Submit}
-          />
+  onBack={() => setStep(1)}
+  onSubmit={handleStep2Submit}
+  placeId={formData.id}
+/>
         )}
       </main>
 

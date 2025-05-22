@@ -35,7 +35,7 @@ export default function Navbar() {
   return (
     <>
       {/* Top Navbar */}
-      <nav className="max-w-5xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6 lg:px-12 shadow-sm relative">
+      <nav className="max-w-6xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6 lg:px-12 shadow-sm relative">
         {/* Left - Hamburger for mobile */}
         <button
           className="md:hidden"
@@ -46,9 +46,10 @@ export default function Navbar() {
 
         {/* Center - Logo and text (always centered) */}
         <Link
-          href="/"
-          className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 md:relative md:left-0 md:transform-none"
-        >
+  href="/"
+  className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 md:relative md:left-0 md:translate-x-0"
+>
+
           <div className="relative w-[36px] h-[36px]">
             <Image
               src="/images/logo.png"
@@ -61,7 +62,7 @@ export default function Navbar() {
         </Link>
 
         {/* Center Links - Desktop Only */}
-        <div className="hidden md:flex gap-6 text-sm font-semibold text-black absolute left-1/2 transform -translate-x-1/2">
+        <div className="hidden md:flex gap-6 text-sm font-semibold text-black absolute left-1/2 transform -translate-x-1/2 mt-2">
           {["Start a Trip", "Contribute", "About Us"].map((label) => {
             const customRoutes = {
               "Start a Trip": "/trip-planning",

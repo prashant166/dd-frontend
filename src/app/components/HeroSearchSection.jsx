@@ -61,23 +61,30 @@ export default function HeroSearchSection() {
 
       {/* Search Input */}
       <div className="flex justify-center">
-        <div className="flex w-full max-w-xl bg-white rounded-full shadow-md overflow-hidden px-6 py-4 items-center border border-gray-200">
-        <FaSearch className="text-gray-400 mr-3" />
-          <input
-            type="text"
-            placeholder="Places to go, things to do, hotels..."
-            className="flex-1 outline-none bg-transparent text-sm placeholder-gray-500"
-          />
-          <Link href="/search">
-  <button className="ml-2 bg-orange-700 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-full transition">
-    Search
-  </button>
-</Link>
-        </div>
-      </div>
-      <p className="text-sm text-gray-500 mt-4 italic">
+  <div className="flex w-full max-w-3xl bg-white rounded-full shadow-md overflow-hidden px-6 py-4 items-center border border-gray-200">
+    <FaSearch className="text-gray-400 mr-3" />
+    <input
+      type="text"
+      placeholder="Places to go, things to do, hotels..."
+      className="flex-1 outline-none bg-transparent text-sm placeholder-gray-500"
+    />
+    <Link href="/search">
+      <button className="ml-2 bg-orange-700 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-full transition flex items-center justify-center">
+        {/* Hide text on small screens, show only icon */}
+        <span className="block sm:hidden">
+          <FaSearch className="w-4 h-6" />
+        </span>
+        <span className="hidden sm:block">
+          Search
+        </span>
+      </button>
+    </Link>
+  </div>
+</div>
+<p className="text-sm text-gray-500 mt-4 italic text-center px-4">
   Try: “somewhere calm with art and chai” or “budget-friendly weekend escape”
 </p>
+
 
     </section>
   );

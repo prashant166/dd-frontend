@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updatePlace } from "../../../redux/slices/placeSlice";
 
 const budgets = ["Low", "Medium", "High", "Luxury"];
 const bestTimes = ["Morning", "Afternoon", "Evening", "Night"];
 
-export default function AddPlaceStep2({ onBack, onSubmit }) {
+export default function AddPlaceStep2({ onBack, onSubmit, placeId }) {
+  const dispatch = useDispatch();
   const [description, setDescription] = useState("");
   const [entryFee, setEntryFee] = useState("");
   const [budget, setBudget] = useState("");
@@ -21,17 +24,29 @@ const [safetyComment, setSafetyComment] = useState("");
     setImages(files.map((file) => URL.createObjectURL(file)));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({
-      description,
-      entryFee: entryFee || null,
-      budget_per_head: budget,
-      best_time_to_visit: bestTime,
-      parking_available: parking,
-      images,
-    });
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const updatePayload = {
+    description,
+    entry_fee: entryFee || null,
+    budget_per_head: budget,
+    best_time_to_visit: bestTime,
+    parking_available: parking,
+    images, // You may need to handle file upload here instead of just URLs
+    // Optionally add safety fields
+    felt_safe: feltSafe,
+    safety_comment: safetyComment,
   };
+
+  try {
+    await dispatch(updatePlace({ id: placeId, formData: updatePayload })).unwrap();
+    onSubmit(updatePayload); // Optional — if parent needs final data
+  } catch (error) {
+    console.error("Update failed:", error);
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-8 space-y-10 mt-20">
