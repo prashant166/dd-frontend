@@ -15,12 +15,16 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import userReducer from "./slices/userSlice"; // Adjust path if needed
 import placeReducer from "./slices/placeSlice";
 import likedPlacesReducer from "./slices/likedPlacesSlice"
+import searchReducer from "./slices/searchSlice"; // Import search slice
+import itineraryReducer from "./slices/itinerarySlice"; // Import itinerary slice
 
 // Combine reducers
 const rootReducer = combineReducers({
   user: userReducer,
   place: placeReducer,
   likedPlaces: likedPlacesReducer,
+  search: searchReducer, // Add search slice
+  itinerary: itineraryReducer, // Add itinerary slice
   // Add other slices here (e.g., org, product, etc.)
 });
 
@@ -29,7 +33,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  whitelist: ["user"], // only persist user slice
+  whitelist: ["user", "search", "itinerary"], // only persist user slice
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,9 +1,11 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 
 export default function SearchCard({
+  id,
   image,
   title,
   location,
@@ -14,9 +16,13 @@ export default function SearchCard({
   budget = "₹200–400",
 }) {
   const [liked, setLiked] = useState(false);
+  const router = useRouter();
 
   return (
-    <div className="relative flex gap-4 bg-white shadow-sm hover:shadow-md transition-shadow rounded-xl p-4 border mb-6 w-full max-w-5xl mx-auto">
+    <div
+      onClick={() => router.push(`/place/${id}`)}
+      className="relative flex gap-4 bg-white shadow-sm hover:shadow-md transition-shadow rounded-xl p-4 border mb-6 w-full max-w-5xl mx-auto cursor-pointer"
+    >
       {/* Category badge */}
       <span className="absolute top-2 right-2 bg-orange-100 text-orange-600 text-xs px-2 py-1 rounded-md font-medium">
         {category}
@@ -44,7 +50,10 @@ export default function SearchCard({
         </div>
 
         {/* Tags and Buttons */}
-        <div className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div
+          className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+          onClick={(e) => e.stopPropagation()} // 🛑 Prevents routing on button click
+        >
           <div className="flex flex-wrap gap-2 mb-2 sm:mb-0">
             {tags.map((tag, i) => (
               <span

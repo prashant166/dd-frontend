@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { likePlace, unlikePlace } from "../../../redux/slices/likedPlacesSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { formatImageUrl } from "../../../utils/formatImageUrl";
 
 
 export default function PlaceCard({ place }) {
@@ -28,13 +29,15 @@ export default function PlaceCard({ place }) {
     }
   };
 
+    const imageUrl = formatImageUrl(place.image);
+
   return (
     <Link href={`/place/${place.id}`} className="block">
       <div className="relative w-64 flex-shrink-0 rounded-xl overflow-hidden shadow hover:shadow-lg transition">
         {/* Image */}
         <div className="relative h-44 w-full">
           <Image
-            src={place.image}
+             src={imageUrl}
             alt={place.title}
             layout="fill"
             objectFit="cover"
@@ -57,11 +60,11 @@ export default function PlaceCard({ place }) {
         <div className="p-4 bg-white rounded-b-xl">
           <h3 className="font-semibold text-sm mb-1">{place.title}</h3>
           <div className="flex items-center text-sm text-gray-700 mb-1">
-            <span className="font-semibold text-green-600 mr-1">
-              {place.rating}
+            <span className="font-semibold text-orange-600 mr-1 truncate w-full">
+              {place.location}
             </span>
-            <span>•</span>
-            <span className="ml-1 text-gray-500">({place.reviews})</span>
+            {/* <span>•</span>
+            <span className="ml-1 text-gray-500">({place.reviews})</span> */}
           </div>
           <p className="text-xs text-gray-500">{place.subtitle}</p>
         </div>

@@ -1,18 +1,12 @@
-@import "tailwindcss";
-/* Hide scrollbar for all browsers */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: var(--font-poppins), sans-serif;
 }
 
-/* globals.css or tailwind.css */
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-none {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+body {
+  all: unset;
+  font-family: var(--font-poppins), sans-serif;
 }

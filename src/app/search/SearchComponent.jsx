@@ -1,7 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import SearchCard from "../components/SearchCard";
+import SearchCardSkeleton from "../components/SearchCardSkeleton";
+import { searchPlaces } from "../../../redux/slices/searchSlice";
+
 
 const dummyResults = Array.from({ length: 100 }, (_, i) => ({
   id: i,
@@ -17,22 +21,38 @@ const dummyResults = Array.from({ length: 100 }, (_, i) => ({
 }));
 
 export default function SearchPage() {
-  const [items, setItems] = useState(dummyResults.slice(0, 10));
-  const [hasMore, setHasMore] = useState(true);
+  // const [items, setItems] = useState(dummyResults.slice(0, 10));
+  // const [hasMore, setHasMore] = useState(true);
+  // const [loading, setLoading] = useState(true); 
+    const dispatch = useDispatch();
 
-  const fetchMoreData = () => {
-    setTimeout(() => {
-      const next = dummyResults.slice(items.length, items.length + 10);
-      setItems([...items, ...next]);
-      if (items.length + next.length >= dummyResults.length) {
-        setHasMore(false);
-      }
-    }, 800);
-  };
+  const {
+    searchResults: items,
+    loading,
+    hasMore, // if you decide to implement pagination later
+  } = useSelector((state) => state.search);
+
+
+  //   useEffect(() => {
+  //   setTimeout(() => {
+  //     setItems(dummyResults.slice(0, 10));
+  //     setLoading(false);
+  //   }, 2000); // simulate API
+  // }, []);
+
+  // const fetchMoreData = () => {
+  //   setTimeout(() => {
+  //     const next = dummyResults.slice(items.length, items.length + 10);
+  //     setItems([...items, ...next]);
+  //     if (items.length + next.length >= dummyResults.length) {
+  //       setHasMore(false);
+  //     }
+  //   }, 800);
+  // };
 
   return (
     <div className="max-w-6xl mx-auto px-4">
-       <h1 className="text-3xl font-bold mt-30 mb-2">Showing results for your mood</h1>
+       <h1 className="text-3xl font-bold mt-40 mb-2">Showing results for your mood</h1>
        <p className="text-gray-600 mb-6 text-base">
     Based on your vibe, we’ve curated some spots in Delhi that match what you're looking for. Go explore!
   </p>
@@ -57,21 +77,45 @@ export default function SearchPage() {
 
 
 
-      <InfiniteScroll
-        dataLength={items.length}
-        next={fetchMoreData}
-        hasMore={hasMore}
-        loader={<p className="text-center text-sm text-gray-400">Loading more places...</p>}
-        endMessage={
-          <p className="text-center text-sm text-gray-500 mt-4">
-            You’ve reached the end of the list.
-          </p>
-        }
-      >
-        {items.map((item) => (
-          <SearchCard key={item.id} {...item} />
-        ))}
-      </InfiniteScroll>
+       {loading ? (
+        Array.from({ length: 6 }).map((_, i) => <SearchCardSkeleton key={i} />)
+      ) : (
+        <InfiniteScroll
+          dataLength={items.length}
+          hasMore={false} // disable for now
+          loader={<SearchCardSkeleton />}
+          endMessage={
+            <p className="text-center text-sm text-gray-500 mt-4">
+              You’ve reached the end of the list.
+            </p>
+          }
+        >
+          {items.map((item) => {
+  const rawImage = item.images?.[0] || "";
+  const image = rawImage.startsWith("http")
+    ? rawImage
+    : rawImage.startsWith("/upload")
+    ? `http://localhost:2807${rawImage}`
+    : "/images/placeholder.png"; // fallback
+
+  return (
+    <SearchCard
+      id={item.id}
+      key={item.id}
+      image={image}
+      title={item.name}
+      location={item.location}
+      description={item.description}
+      tags={item.tags}
+      category={item.category?.name || "Other"}
+      hasParking={item.parking_available}
+      budget={`₹${item.entry_fee}`}
+    />
+  );
+})}
+
+        </InfiniteScroll>
+      )}
     </div>
   );
 }

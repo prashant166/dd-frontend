@@ -34,6 +34,7 @@ export default function Navbar() {
 
   return (
     <>
+    
       {/* Top Navbar */}
       <nav className="max-w-6xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6 lg:px-12 shadow-sm relative">
         {/* Left - Hamburger for mobile */}
@@ -50,7 +51,7 @@ export default function Navbar() {
   className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 md:relative md:left-0 md:translate-x-0"
 >
 
-          <div className="relative w-[36px] h-[36px]">
+          <div className="relative w-[46px] h-[46px]">
             <Image
               src="/images/logo.png"
               alt="DailyDilli Logo"
@@ -58,7 +59,7 @@ export default function Navbar() {
               className="object-contain"
             />
           </div>
-          <span className="text-xl font-extrabold text-black">DailyDilli</span>
+          <span className="text-2xl sm:text-3xl font-extrabold text-black">DailyDilli</span>
         </Link>
 
         {/* Center Links - Desktop Only */}
@@ -91,7 +92,7 @@ export default function Navbar() {
           ) : (
             <button
               onClick={openOptions}
-              className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-600 transition"
+              className="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition"
             >
               Sign in
             </button>
@@ -103,14 +104,18 @@ export default function Navbar() {
       {mobileNavOpen && (
   <>
     {/* Backdrop with blur and click-to-close */}
-    <div
-      className="fixed inset-0 z-40 backdrop-blur-none
- bg-black/10"
+      <div
+      className={`fixed inset-0 z-40 bg-black/10 transition-opacity duration-300 ease-in-out ${mobileNavOpen ? "opacity-100" : "opacity-0"}`}
       onClick={() => setMobileNavOpen(false)}
     />
 
     {/* Slide-in Drawer (60% width) */}
-    <div className="fixed top-0 left-0 w-3/5 h-full bg-white z-50 shadow-lg flex flex-col p-6">
+      <div
+      className={`fixed top-0 left-0 w-3/5 h-full bg-white z-50 shadow-lg flex flex-col p-6
+                  transform transition-transform duration-300 ease-in-out
+                  ${mobileNavOpen ? "translate-x-0" : "-translate-x-full"}`}
+    >
+
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-2">
@@ -154,48 +159,59 @@ export default function Navbar() {
 
       {/* Dialogs */}
       <dialog
-        ref={optionsDialog}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-0 border-none rounded-xl max-w-md w-[90%] shadow-xl backdrop:bg-black/40"
-      >
-        <SignInContent onClose={closeOptions} onEmailClick={handleEmailClick} />
-      </dialog>
+  ref={optionsDialog}
+  className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
+>
+  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+    <SignInContent onClose={closeOptions} onEmailClick={handleEmailClick} />
+  </div>
+</dialog>
 
-      <dialog
-        ref={emailDialog}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-0 border-none rounded-xl max-w-md w-[90%] shadow-xl backdrop:bg-black/40"
-      >
-        <EmailLoginDialog
-          onClose={closeEmail}
-          onForgotClick={() => {
-            closeEmail();
-            openForgot();
-          }}
-          onJoinClick={() => {
-            closeEmail();
-            openJoin();
-          }}
-        />
-      </dialog>
 
-      <dialog
-        ref={forgotDialog}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-0 border-none rounded-xl max-w-md w-[90%] shadow-xl backdrop:bg-black/40"
-      >
-        <ForgotPasswordDialog onClose={closeForgot} />
-      </dialog>
 
-      <dialog
-        ref={joinDialog}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-0 border-none rounded-xl max-w-md w-[90%] shadow-xl backdrop:bg-black/40"
-      >
-        <JoinDialog
-          onClose={closeJoin}
-          onLoginClick={() => {
-            closeJoin();
-            emailDialog.current?.showModal();
-          }}
-        />
-      </dialog>
+     <dialog
+  ref={emailDialog}
+  className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
+>
+  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+    <EmailLoginDialog
+      onClose={closeEmail}
+      onForgotClick={() => {
+        closeEmail();
+        openForgot();
+      }}
+      onJoinClick={() => {
+        closeEmail();
+        openJoin();
+      }}
+    />
+  </div>
+</dialog>
+
+<dialog
+  ref={forgotDialog}
+  className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
+>
+  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+    <ForgotPasswordDialog onClose={closeForgot} />
+  </div>
+</dialog>
+
+<dialog
+  ref={joinDialog}
+  className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
+>
+  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+    <JoinDialog
+      onClose={closeJoin}
+      onLoginClick={() => {
+        closeJoin();
+        emailDialog.current?.showModal();
+      }}
+    />
+  </div>
+</dialog>
+
     </>
   );
 }

@@ -20,13 +20,14 @@ export default function MapDisplay({ places }) {
     >
       {places.map((place, i) => (
         <Marker
-          key={i}
-          longitude={place.coords[0]}
-          latitude={place.coords[1]}
-          anchor="bottom"
-        >
-          <div className="text-xl">📍</div>
-        </Marker>
+  key={i}
+  longitude={parseFloat(place.longitude)}
+  latitude={parseFloat(place.latitude)}
+  anchor="bottom"
+>
+  <div className="text-xl">📍</div>
+</Marker>
+
       ))}
     </Map>
   );

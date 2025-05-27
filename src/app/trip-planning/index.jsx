@@ -8,6 +8,9 @@ import MapDisplay from "./MapDisplay";
 import ItineraryCard from "./ItineraryCard";
 import TravelTime from "./TravelTImeComponent";
 
+import { useDispatch, useSelector } from "react-redux";
+import { generateItinerary, clearItinerary } from "../../../redux/slices/itinerarySlice";
+
 // Dummy itinerary with coords
 const mockItinerary = [
   {
@@ -50,19 +53,12 @@ const mockItinerary = [
 
 
 export default function TripPlanningPage() {
-  const [loading, setLoading] = useState(false);
-  const [itinerary, setItinerary] = useState([]);
+    const dispatch = useDispatch();
+  const { itinerary, loading } = useSelector((state) => state.itinerary);
 
-  const handleGenerate = (finalPrompt) => {
-    console.log("Prompt:", finalPrompt);
-    setLoading(true);
-    setItinerary([]);
-
-    // Simulate API call
-    setTimeout(() => {
-      setItinerary(mockItinerary);
-      setLoading(false);
-    }, 2000);
+  const handleGenerate = (finalPrompt, tags = []) => {
+    dispatch(clearItinerary());
+    dispatch(generateItinerary({ prompt: finalPrompt, tags }));
   };
 
   return (
@@ -81,16 +77,37 @@ export default function TripPlanningPage() {
 
           {loading && <SkeletonLoader />}
 
-          {itinerary.length > 0 && (
-            <div className="mt-10 space-y-6">
-              {itinerary.map((item, i) => (
-  <div key={i}>
-    <ItineraryCard step={item} stepNumber={i + 1} />
-    {i < itinerary.length - 1 && (
-      <TravelTime time="15 mins" mode="car" />
-    )}
-  </div>
-))}
+          {itinerary?.places?.length > 0 && (
+  <div className="mt-10 space-y-6">
+    {itinerary.places.map((item, i) => (
+      <div key={i}>
+        <ItineraryCard
+  step={{
+    title: item.name,
+    location: item.location,
+    description: item.description,
+    image: item.images?.[0]
+      ? item.images[0].startsWith("/upload")
+        ? `http://localhost:2807${item.images[0]}`
+        : item.images[0]
+      : "/images/placeholder.png",
+    tags: item.tags || [],
+    category: item.category?.name || "Spot",
+    hasParking: item.parking_available,
+    budget: item.budget_per_head === "Low" ? "₹0–200" : item.budget_per_head === "Medium" ? "₹200–500" : "₹500+",
+  }}
+  stepNumber={i + 1}
+/>
+
+        {i < itinerary.travelInfo.length && (
+          <TravelTime
+            time={`${Math.round(itinerary.travelInfo[i].duration_value / 60)} mins`}
+            mode={itinerary.mode_of_travel}
+          />
+        )}
+      </div>
+    ))}
+
 
               <div className="mt-8 flex gap-4">
                 <button
@@ -112,7 +129,7 @@ export default function TripPlanningPage() {
 
         {/* Right: Map */}
         <div className="sticky top-40 h-[500px] rounded-lg overflow-hidden mt-30">
-          <MapDisplay places={itinerary} />
+          <MapDisplay places={itinerary?.places || []} />
         </div>
       </div>
 

@@ -54,7 +54,7 @@ const attractions = [
     image: "/images/sunder.jpg",
   },
 ];
-export default function AreaSection({ coordinates }) {
+export default function AreaSection({ coordinates, mapUrl }) {
   return (
     <div className="mt-16 px-4 lg:px-10 max-w-7xl mx-auto">
       <h2 className="text-xl font-bold mb-2">📍 The Area</h2>
@@ -69,14 +69,22 @@ export default function AreaSection({ coordinates }) {
 
       {/* MAP SECTION FIRST */}
       <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-md border mb-10">
-        <iframe
-          width="100%"
-          height="100%"
-          loading="lazy"
-          allowFullScreen
-          className="border-0"
-          src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}&z=15&output=embed`}
-        />
+        {coordinates?.lat && coordinates?.lng ? (
+  <iframe
+    width="100%"
+    height="300"
+    loading="lazy"
+    allowFullScreen
+    className="border-0"
+    // src={`https://www.google.com/maps?q=${coordinates.lat},${coordinates.lng}&z=15&output=embed`}
+    src={mapUrl}
+  />
+) : (
+  <div className="text-sm text-gray-500 text-center py-6">
+    Location map is not available.
+  </div>
+)}
+
       </div>
 
       {/* NEARBY PLACES */}

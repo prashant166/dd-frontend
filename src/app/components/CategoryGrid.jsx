@@ -6,22 +6,33 @@ import {
   FiCoffee,
   FiCompass,
   FiHeart,
-  FiShoppingBag,
   FiSmile,
+  FiShoppingBag,
   FiMap,
   FiEyeOff,
+  FiBook,
+  FiGlobe,
+  FiFilm,
+  FiMoon,
+  FiUsers
 } from "react-icons/fi";
 
+
 const categories = [
-  { name: "Historical", icon: FiArchive, slug: "historical" },
-  { name: "Restaurants", icon: FiCoffee, slug: "restaurants" },
-  { name: "Adventure", icon: FiCompass, slug: "adventure" },
-  { name: "Romantic", icon: FiHeart, slug: "romantic" },
-  { name: "Pet-Friendly", icon: FiSmile, slug: "pet-friendly" },
-  { name: "Shopping", icon: FiShoppingBag, slug: "shopping" },
-  { name: "Local Markets", icon: FiMap, slug: "markets" },
-  { name: "Hidden Gems", icon: FiEyeOff, slug: "hidden-gems" },
+  { id: 1, name: "Historical", icon: FiArchive, slug: "historical" },
+  { id: 2, name: "Cafe", icon: FiCoffee, slug: "cafe" },
+  { id: 3, name: "Adventure", icon: FiCompass, slug: "adventure" },
+  { id: 4, name: "Romantic", icon: FiHeart, slug: "romantic" },
+  { id: 5, name: "Shopping", icon: FiShoppingBag, slug: "shopping" },
+  { id: 6, name: "Religious", icon: FiBook, slug: "religious" },
+  { id: 7, name: "Cultural", icon: FiGlobe, slug: "cultural" },
+  { id: 8, name: "Entertainment", icon: FiFilm, slug: "entertainment" },
+  { id: 9, name: "Nightlife", icon: FiMoon, slug: "nightlife" },
+  { id: 10, name: "Family-friendly", icon: FiUsers, slug: "family-friendly" },
+  { id: 11, name: "Pet-Friendly", icon: FiSmile, slug: "pet-friendly" },
+  { id: 12, name: "Hidden Gems", icon: FiEyeOff, slug: "hidden-gems" },
 ];
+
 
 export default function CategoryGrid() {
   return (

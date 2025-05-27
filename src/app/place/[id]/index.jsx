@@ -1,42 +1,42 @@
-import PlaceDetail from "./PlaceDetail";
+"use client";
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "next/navigation";
 import StaticHeader from "../../components/StaticHeader";
 import Footer from "../../components/Footer";
+import PlaceDetail from "./PlaceDetail";
+import { getPlaceById } from "../../../../redux/slices/placeSlice";
+import SearchCardSkeleton from "../../components/SearchCardSkeleton";
 
-const mockPlaces = [
-  {
-    id: "1",
-    name: "Mehrauli Archaeological Park",
-    description: "A historic site with ruins, greenery, and ancient architecture.",
-    locality: "Mehrauli, New Delhi",
-    image: "/images/place1.png",
-    coordinates: { lat: 28.5206, lng: 77.1855 },
-  },
-  {
-    id: "2",
-    name: "Lodhi Garden",
-    description: "A lush garden with tombs from the Lodhi dynasty.",
-    locality: "Lutyens' Delhi",
-    image: "/images/place2.png",
-    coordinates: { lat: 28.5916, lng: 77.2197 },
-  },
-];
+export default function Page() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { selectedPlace, loading, error } = useSelector((state) => state.place);
 
-// ✅ REQUIRED for static export with dynamic routes
-export async function generateStaticParams() {
-  return mockPlaces.map((place) => ({
-    id: place.id,
-  }));
-}
-
-export default function Page({ params }) {
-  const place = mockPlaces.find((p) => p.id === params.id);
-
-  if (!place) return <p className="text-center mt-20">Place not found</p>;
+  useEffect(() => {
+    if (id) {
+      dispatch(getPlaceById(id));
+    }
+  }, [id, dispatch]);
 
   return (
     <>
       <StaticHeader />
-      <PlaceDetail place={place} />
+
+      <main className="min-h-screen">
+        {loading || !selectedPlace ? (
+          <div className="max-w-6xl mx-auto px-4 mt-32">
+            <SearchCardSkeleton />
+            <SearchCardSkeleton />
+          </div>
+        ) : error ? (
+          <p className="text-center mt-20 text-red-500">Error: {error}</p>
+        ) : (
+          <PlaceDetail place={selectedPlace} />
+        )}
+      </main>
+
       <Footer />
     </>
   );

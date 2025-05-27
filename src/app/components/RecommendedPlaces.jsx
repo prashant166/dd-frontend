@@ -1,105 +1,49 @@
 "use client";
-
-import { useRef, useState, useEffect } from "react";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { getPlaces } from "../../../redux/slices/placeSlice";
 import PlaceCard from "./PlaceCard";
-
-const samplePlaces = [
-  {
-    id: "1",
-    title: "Nehru Museum & Planetarium (Teen Murti Bhavan)",
-    image: "/images/Banner.png",
-    rating: "3.9",
-    reviews: 164,
-    subtitle: "Historic Sites, Speciality Museums",
-  },
-  {
-    id: "2",
-    title: "Nehru Park",
-    image: "/images/Banner.png",
-    rating: "4.2",
-    reviews: 154,
-    subtitle: "Parks",
-  },
-  {
-    id: "3",
-    title: "Mehrauli Archaeological Park",
-    image: "/images/Banner.png",
-    rating: "4.3",
-    reviews: 325,
-    subtitle: "Ancient Ruins, Historic Sites",
-  },
-  {
-    id: "4",
-    title: "National Rail Museum",
-    image: "/images/Banner.png",
-    rating: "4.2",
-    reviews: 738,
-    subtitle: "Speciality Museums",
-  },
-  {
-    id: "4",
-    title: "National Rail Museum",
-    image: "/images/Banner.png",
-    rating: "4.2",
-    reviews: 738,
-    subtitle: "Speciality Museums",
-  },
-  {
-    id: "4",
-    title: "National Rail Museum",
-    image: "/images/Banner.png",
-    rating: "4.2",
-    reviews: 738,
-    subtitle: "Speciality Museums",
-  },
-  {
-    id: "4",
-    title: "National Rail Museum",
-    image: "/images/Banner.png",
-    rating: "4.2",
-    reviews: 738,
-    subtitle: "Speciality Museums",
-  },
-  {
-    id: "4",
-    title: "National Rail Museum",
-    image: "/images/Banner.png",
-    rating: "4.2",
-    reviews: 738,
-    subtitle: "Speciality Museums",
-  },
-];
 
 export default function RecommendedPlaces() {
   const scrollRef = useRef(null);
+  const dispatch = useDispatch();
+  const { places } = useSelector((state) => state.place);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
+  useEffect(() => {
+    dispatch(getPlaces());
+  }, [dispatch]);
+
   const scroll = (direction) => {
-    const { current } = scrollRef;
+    const current = scrollRef.current;
     if (!current) return;
 
     const scrollAmount = 300;
-    current.scrollBy({ left: direction === "right" ? scrollAmount : -scrollAmount, behavior: "smooth" });
+    current.scrollBy({
+      left: direction === "right" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
   };
 
   const checkScrollPosition = () => {
     const el = scrollRef.current;
     if (!el) return;
-
     setShowLeftArrow(el.scrollLeft > 0);
     setShowRightArrow(el.scrollLeft + el.clientWidth < el.scrollWidth);
   };
 
   useEffect(() => {
-    checkScrollPosition();
-    const ref = scrollRef.current;
-    if (ref) {
-      ref.addEventListener("scroll", checkScrollPosition);
-      return () => ref.removeEventListener("scroll", checkScrollPosition);
+    const el = scrollRef.current;
+    if (el) {
+      el.addEventListener("scroll", checkScrollPosition);
+      return () => el.removeEventListener("scroll", checkScrollPosition);
     }
   }, []);
+
+  // 🌀 Randomly pick 8 approved places
+  const shuffled = [...places].sort(() => 0.5 - Math.random()).slice(0, 8);
 
   return (
     <section className="mt-20 px-4 relative">
@@ -108,7 +52,6 @@ export default function RecommendedPlaces() {
         <p className="text-sm text-gray-500 mb-4">More things to do in New Delhi</p>
 
         <div className="relative">
-          {/* Left Arrow */}
           {showLeftArrow && (
             <button
               onClick={() => scroll("left")}
@@ -118,18 +61,35 @@ export default function RecommendedPlaces() {
             </button>
           )}
 
-          {/* Scrollable Container */}
           <div
             ref={scrollRef}
-            className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-2"
+            className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-2 scrollbar-hide"
           >
-            {samplePlaces.map((place, index) => (
-              <PlaceCard key={index} place={place} />
-            ))}
+            {shuffled.map((item) => {
+              const rawImage = item.images?.[0] || "";
+              const image = rawImage.startsWith("http")
+                ? rawImage
+                : rawImage.startsWith("/upload")
+                ? `http://localhost:2807${rawImage}`
+                : "/images/placeholder.png";
+
+              return (
+                <PlaceCard
+                  key={item.id}
+                  place={{
+                    id: item.id,
+                    image,
+                    title: item.name,
+                    subtitle: item.category?.name || "Spot",
+                    // rating: "4.2", // Replace with real rating if available
+                    // reviews: 120, // Replace with real count if available
+                    location: item.location,
+                  }}
+                />
+              );
+            })}
           </div>
 
-
-          {/* Right Arrow */}
           {showRightArrow && (
             <button
               onClick={() => scroll("right")}

@@ -7,7 +7,7 @@ export default function ItineraryCard({ step, stepNumber }) {
     time,
     location,
     description,
-    image = "/images/placeholder.jpg", // fallback image
+    image = "/images/placeholder.png", // fallback image
     tags = [],
     category = "Spot",
     hasParking = true,
