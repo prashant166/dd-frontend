@@ -8,12 +8,8 @@ import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 import { FaFemale } from "react-icons/fa";
 
 export default function PlaceDetail({ place, google_map_url }) {
-  const imageSrc =
-    place.images?.length > 0
-      ? place.images[0].startsWith("/upload")
-        ? `http://localhost:2807${place.images[0]}`
-        : place.images[0]
-      : "/images/placeholder.png";
+  const imageSrc = place.images?.[0] || "/images/placeholder.png";
+
 
   return (
     <div className="max-w-6xl mx-auto px-4 lg:flex gap-8 py-10 mt-24">
@@ -39,11 +35,7 @@ export default function PlaceDetail({ place, google_map_url }) {
          <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-sm bg-gray-100">
   {place.images?.length > 0 ? (
     <Image
-      src={
-        place.images[0].startsWith("/upload")
-          ? `http://localhost:2807${place.images[0]}`
-          : place.images[0]
-      }
+      src={imageSrc}
       alt={place.name}
       width={1200}
       height={675}

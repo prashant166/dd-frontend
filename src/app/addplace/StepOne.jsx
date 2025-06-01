@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   GoogleMap,
   LoadScript,
@@ -13,18 +14,19 @@ import usePlacesAutocomplete, {
 import { useDispatch } from "react-redux";
 import { createPlace } from "../../../redux/slices/placeSlice";
 import CircularProgress from "@mui/material/CircularProgress";
+import { fetchCategories } from "../../../redux/slices/categorySlice"; 
 
 
-const categories = [
-  { id: 1, name: "Accommodation" },
-  { id: 2, name: "Restaurant" },
-  { id: 3, name: "Things to Do" },
-  { id: 4, name: "Shopping" },
-  { id: 5, name: "Attraction" },
-  { id: 6, name: "Event" },
-  { id: 7, name: "Transportation" },
-  { id: 8, name: "Other" },
-];
+// const categories = [
+//   { id: 1, name: "Accommodation" },
+//   { id: 2, name: "Restaurant" },
+//   { id: 3, name: "Things to Do" },
+//   { id: 4, name: "Shopping" },
+//   { id: 5, name: "Attraction" },
+//   { id: 6, name: "Event" },
+//   { id: 7, name: "Transportation" },
+//   { id: 8, name: "Other" },
+// ];
 
 const containerStyle = {
   width: "100%",
@@ -45,6 +47,7 @@ export default function AddPlaceStep1({ onNext }) {
   const [location, setLocation] = useState("");
   const [latLng, setLatLng] = useState(defaultCenter);
   const [loading, setLoading] = useState(false);
+  const { categories, loading: categoryLoading, error: categoryError } = useSelector(state => state.categories);
 
 
  const {
@@ -61,6 +64,11 @@ export default function AddPlaceStep1({ onNext }) {
   },
   debounce: 300,
 });
+
+  useEffect(() => {
+  dispatch(fetchCategories());
+}, [dispatch]);
+
 
   const handleSelect = async (description) => {
     setValue(description, false);
@@ -105,8 +113,10 @@ const handleSubmit = async (e) => {
   return (
     <LoadScript
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-      libraries={["places"]}
+      // libraries={["places"]}
     >
+      console.log("✅ API Key:", process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
+
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-8 space-y-10 mt-15">
         <h1 className="text-4xl font-bold">Add a place</h1>
 
@@ -139,29 +149,38 @@ const handleSubmit = async (e) => {
 
         {/* Category Field */}
         <div>
-          <label className="block text-lg font-medium mb-2">
-            Which category best describes this place?
-          </label>
-          <div className="flex gap-4 flex-wrap">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-5 py-2 border rounded-full text-base font-medium transition ${
-                  selectedCategory?.id === cat.id
-                    ? "bg-orange-600 text-white border-orange-600"
-                    : "border-gray-300 text-gray-800 hover:border-orange-600"
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
-          {touched && !selectedCategory && (
-            <p className="text-red-500 text-sm mt-2">This field is required</p>
-          )}
-        </div>
+  <label className="block text-lg font-medium mb-2">
+    Which category best describes this place?
+  </label>
+
+  {categoryLoading ? (
+    <p className="text-sm text-gray-500">Loading categories...</p>
+  ) : categoryError ? (
+    <p className="text-sm text-red-500">{categoryError}</p>
+  ) : (
+    <div className="flex gap-4 flex-wrap">
+      {categories.map((cat) => (
+        <button
+          key={cat.id}
+          type="button"
+          onClick={() => setSelectedCategory(cat)}
+          className={`px-5 py-2 border rounded-full text-base font-medium transition ${
+            selectedCategory?.id === cat.id
+              ? "bg-orange-600 text-white border-orange-600"
+              : "border-gray-300 text-gray-800 hover:border-orange-600"
+          }`}
+        >
+          {cat.name}
+        </button>
+      ))}
+    </div>
+  )}
+
+  {touched && !selectedCategory && (
+    <p className="text-red-500 text-sm mt-2">This field is required</p>
+  )}
+</div>
+
 
         {/* Location Field with Autocomplete */}
         <div>

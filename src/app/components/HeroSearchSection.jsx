@@ -86,10 +86,11 @@ const handleSearch = () => {
 
 
       <p className="text-base text-gray-600 max-w-2xl mx-auto mb-6">
-  Don’t know exactly what you’re looking for? Just type what’s on your mind — our AI understands your vibe and mood to suggest the perfect spots. 
+  Not sure what you want? Just share your vibe — our AI gets it and suggests the perfect spots.
   <br />
-  <span className="font-semibold text-orange-600">Say goodbye to boring, rigid searches.</span>
+  <span className="font-semibold text-orange-600">No more boring, rigid searches.</span>
 </p>
+
 
       {/* Search Input */}
       <div className="flex justify-center">

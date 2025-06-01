@@ -55,14 +55,16 @@ export default function SearchCard({
           onClick={(e) => e.stopPropagation()} // 🛑 Prevents routing on button click
         >
           <div className="flex flex-wrap gap-2 mb-2 sm:mb-0">
-            {tags.map((tag, i) => (
-              <span
-                key={i}
-                className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full"
-              >
-                {tag}
-              </span>
-            ))}
+            {Array.isArray(tags) &&
+  tags.map((tag, i) => (
+    <span
+      key={i}
+      className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full"
+    >
+      {tag}
+    </span>
+  ))}
+
           </div>
 
           {/* Action Buttons */}

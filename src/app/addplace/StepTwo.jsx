@@ -2,9 +2,25 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updatePlace } from "../../../redux/slices/placeSlice";
+import { uploadPlaceImages } from "../../../redux/slices/mediaSlice";
+import { submitSafetyFeedback } from "../../../redux/slices/safetySlice";
+
+
 
 const budgets = ["Low", "Medium", "High", "Luxury"];
 const bestTimes = ["Morning", "Afternoon", "Evening", "Night"];
+const tagOptions = [
+  "Family-Friendly",
+  "Budget-Friendly",
+  "Near Metro",
+  "Photogenic",
+  "Historical",
+  "Night Views",
+  "Peaceful",
+  "Nature",
+  "Romantic",
+  "Pet-Friendly",
+];
 
 export default function AddPlaceStep2({ onBack, onSubmit, placeId }) {
   const dispatch = useDispatch();
@@ -17,35 +33,67 @@ export default function AddPlaceStep2({ onBack, onSubmit, placeId }) {
   const isFemaleUser = true; // Replace with actual gender check from auth/user state
 const [feltSafe, setFeltSafe] = useState("");
 const [safetyComment, setSafetyComment] = useState("");
+const [rawFiles, setRawFiles] = useState([]); // actual files for upload
+const [tags, setTags] = useState([]);
+const [uploadedImages, setUploadedImages] = useState([]); // store URLs from server
 
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
-    setImages(files.map((file) => URL.createObjectURL(file)));
-  };
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  const updatePayload = {
-    description,
-    entry_fee: entryFee || null,
-    budget_per_head: budget,
-    best_time_to_visit: bestTime,
-    parking_available: parking,
-    images, // You may need to handle file upload here instead of just URLs
-    // Optionally add safety fields
-    felt_safe: feltSafe,
-    safety_comment: safetyComment,
-  };
+const handleImageUpload = async (e) => {
+  const files = Array.from(e.target.files);
+  setImages(files.map((file) => URL.createObjectURL(file)));
 
   try {
-    await dispatch(updatePlace({ id: placeId, formData: updatePayload })).unwrap();
-    onSubmit(updatePayload); // Optional — if parent needs final data
-  } catch (error) {
-    console.error("Update failed:", error);
+    const uploaded = await dispatch(uploadPlaceImages({ placeId, files })).unwrap();
+    // Optional: store the uploaded URLs back if you want to show the real images
+    console.log("✅ Uploaded:", uploaded);
+  } catch (err) {
+    console.error("❌ Upload failed:", err);
   }
 };
+
+const handleClearImages = () => {
+  setImages([]);
+  setRawFiles([]);
+};
+
+
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    // Step 1: Update the place
+    const updatePayload = {
+      description,
+      entry_fee: entryFee || null,
+      budget_per_head: budget,
+      best_time_to_visit: bestTime,
+      parking_available: parking,
+      images: uploadedImages,
+      tags,
+    };
+
+    await dispatch(updatePlace({ id: placeId, formData: updatePayload })).unwrap();
+
+    // Step 2: Submit safety feedback (only if user is female and selected a value)
+    if (isFemaleUser && feltSafe !== "") {
+      await dispatch(
+        submitSafetyFeedback({
+          place_id: placeId,
+          felt_safe: feltSafe === "true",
+          comment: safetyComment,
+        })
+      ).unwrap();
+    }
+
+    onSubmit(updatePayload); // Callback
+  } catch (error) {
+    console.error("Submission failed:", error);
+  }
+};
+
+
 
 
   return (
@@ -67,6 +115,16 @@ const [safetyComment, setSafetyComment] = useState("");
 
       <div>
         <label className="block text-lg font-medium mb-2">Share your best shot </label>
+        {/* {images.length > 0 && (
+  <button
+    type="button"
+    onClick={handleClearImages}
+    className="px-4 py-2 mt-2 bg-red-500 text-white rounded-full text-sm"
+  >
+    Remove uploaded images
+  </button>
+)} */}
+
         <div className="relative inline-block">
   <input
     type="file"
@@ -162,6 +220,33 @@ const [safetyComment, setSafetyComment] = useState("");
           ))}
         </div>
       </div>
+
+      <div>
+  <label className="block text-lg font-medium mb-2">Tags (select all that apply)</label>
+  <div className="flex flex-wrap gap-3">
+    {tagOptions.map((tag) => {
+      const isSelected = tags.includes(tag);
+      return (
+        <button
+          key={tag}
+          type="button"
+          onClick={() =>
+            setTags((prev) =>
+              isSelected ? prev.filter((t) => t !== tag) : [...prev, tag]
+            )
+          }
+          className={`px-4 py-2 border rounded-full text-sm font-medium transition ${
+            isSelected
+              ? "bg-orange-600 text-white border-orange-600"
+              : "border-gray-300 text-gray-700 hover:border-orange-600"
+          }`}
+        >
+          {tag}
+        </button>
+      );
+    })}
+  </div>
+</div>
 
       {/* Parking */}
       <div className="flex items-center gap-3">

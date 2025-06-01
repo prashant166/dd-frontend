@@ -92,11 +92,8 @@ export default function SearchPage() {
         >
           {items.map((item) => {
   const rawImage = item.images?.[0] || "";
-  const image = rawImage.startsWith("http")
-    ? rawImage
-    : rawImage.startsWith("/upload")
-    ? `http://localhost:2807${rawImage}`
-    : "/images/placeholder.png"; // fallback
+  const image = item.images?.[0] || "/images/placeholder.png";
+
 
   return (
     <SearchCard

@@ -50,8 +50,9 @@ export default function StickyHeader() {
   return (
     <>
       {/* Sticky Navbar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm mt-[1.5px] md:mt-0">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between px-4 sm:px-6 py-3 gap-2">
+
           {/* Left */}
           <div className="flex items-center gap-3">
             {/* Hamburger - visible only on mobile */}
@@ -69,7 +70,8 @@ export default function StickyHeader() {
           </div>
 
           {/* Center - Search */}
-          <div className="flex items-center w-full max-w-md bg-white rounded-full border border-gray-300 px-3 sm:px-4 py-2 shadow-sm mx-4">
+          <div className="flex-1 min-w-0 w-full sm:max-w-md flex items-center bg-white rounded-full border border-gray-300 px-3 sm:px-4 py-2 shadow-sm mx-0 sm:mx-4">
+
             <FaSearch className="text-gray-400 mr-2" size={16} />
             <input
               type="text"
@@ -79,7 +81,7 @@ export default function StickyHeader() {
           </div>
 
           {/* Right - Links & Sign In/User */}
-          <div className="flex items-center gap-4">
+         <div className="flex-shrink-0 flex items-center gap-4">
             {/* Links on md+ */}
             <div className="hidden md:flex gap-6 text-sm font-semibold text-black">
               {["Discover", "Trips", "Review"].map((label) => (
@@ -151,7 +153,7 @@ export default function StickyHeader() {
         ref={optionsDialog}
         className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
       >
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+         <div className="flex flex-col items-center justify-center min-h-[100%]">
           <SignInContent onClose={closeOptions} onEmailClick={handleEmailClick} />
         </div>
       </dialog>
@@ -160,7 +162,7 @@ export default function StickyHeader() {
         ref={emailDialog}
         className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
       >
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+         <div className="flex flex-col items-center justify-center min-h-[100%]">
           <EmailLoginDialog
             onClose={closeEmail}
             onForgotClick={() => {
@@ -179,7 +181,7 @@ export default function StickyHeader() {
         ref={forgotDialog}
         className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
       >
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+         <div className="flex flex-col items-center justify-center min-h-[100%]">
           <ForgotPasswordDialog onClose={closeForgot} />
         </div>
       </dialog>

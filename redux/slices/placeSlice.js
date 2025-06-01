@@ -6,6 +6,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:2807/api/pl
 const initialState = {
   places: [],
   selectedPlace: null,
+  suggestedPlaces: [],
   loading: false,
   error: null,
   successMessage: null,
@@ -89,6 +90,20 @@ export const deletePlace = createAsyncThunk("place/deletePlace", async (id, { re
   }
 });
 
+// ✅ Get Suggested Places (Random, Cached)
+export const getSuggestedPlaces = createAsyncThunk(
+  "place/getSuggestedPlaces",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${API_URL}/suggestions`);
+      return res.data.suggested;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.error || err.message);
+    }
+  }
+);
+
+
 const placeSlice = createSlice({
   name: "place",
   initialState,
@@ -146,7 +161,20 @@ const placeSlice = createSlice({
       .addCase(deletePlace.fulfilled, (state, action) => {
         state.successMessage = action.payload;
         state.selectedPlace = null;
+      })
+            .addCase(getSuggestedPlaces.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getSuggestedPlaces.fulfilled, (state, action) => {
+        state.loading = false;
+        state.suggestedPlaces = action.payload;
+      })
+      .addCase(getSuggestedPlaces.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+
   },
 });
 

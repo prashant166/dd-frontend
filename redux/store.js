@@ -17,6 +17,8 @@ import placeReducer from "./slices/placeSlice";
 import likedPlacesReducer from "./slices/likedPlacesSlice"
 import searchReducer from "./slices/searchSlice"; // Import search slice
 import itineraryReducer from "./slices/itinerarySlice"; // Import itinerary slice
+import categoriesReducer from "./slices/categorySlice"; // Import categories slice
+import safetySliceReducer from "./slices/safetySlice"; // Import safety slice
 
 // Combine reducers
 const rootReducer = combineReducers({
@@ -26,6 +28,8 @@ const rootReducer = combineReducers({
   search: searchReducer, // Add search slice
   itinerary: itineraryReducer, // Add itinerary slice
   // Add other slices here (e.g., org, product, etc.)
+  categories: categoriesReducer, // Add categories slice
+  safety: safetySliceReducer, // Add safety slice
 });
 
 // Persistence config

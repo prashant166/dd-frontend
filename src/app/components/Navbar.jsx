@@ -162,7 +162,7 @@ export default function Navbar() {
   ref={optionsDialog}
   className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
 >
-  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+   <div className="flex flex-col items-center justify-center min-h-[100%]">
     <SignInContent onClose={closeOptions} onEmailClick={handleEmailClick} />
   </div>
 </dialog>
@@ -192,7 +192,7 @@ export default function Navbar() {
   ref={forgotDialog}
   className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
 >
-  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+   <div className="flex flex-col items-center justify-center min-h-[100%]">
     <ForgotPasswordDialog onClose={closeForgot} />
   </div>
 </dialog>
@@ -201,7 +201,7 @@ export default function Navbar() {
   ref={joinDialog}
   className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
 >
-  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+   <div className="flex flex-col items-center justify-center min-h-[100%]">
     <JoinDialog
       onClose={closeJoin}
       onLoginClick={() => {

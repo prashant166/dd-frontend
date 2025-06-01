@@ -29,13 +29,14 @@ export default function PlaceCard({ place }) {
     }
   };
 
-    const imageUrl = formatImageUrl(place.image);
+    const imageUrl = place.image || "/images/placeholder.png";
+
 
   return (
     <Link href={`/place/${place.id}`} className="block">
       <div className="relative w-64 flex-shrink-0 rounded-xl overflow-hidden shadow hover:shadow-lg transition">
         {/* Image */}
-        <div className="relative h-44 w-full">
+        <div className="relative h-48 w-full">
           <Image
              src={imageUrl}
             alt={place.title}
@@ -57,7 +58,7 @@ export default function PlaceCard({ place }) {
         </div>
 
         {/* Content */}
-        <div className="p-4 bg-white rounded-b-xl">
+        <div className="p-2 bg-white rounded-b-xl">
           <h3 className="font-semibold text-sm mb-1">{place.title}</h3>
           <div className="flex items-center text-sm text-gray-700 mb-1">
             <span className="font-semibold text-orange-600 mr-1 truncate w-full">

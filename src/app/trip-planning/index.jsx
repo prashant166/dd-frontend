@@ -56,10 +56,11 @@ export default function TripPlanningPage() {
     const dispatch = useDispatch();
   const { itinerary, loading } = useSelector((state) => state.itinerary);
 
-  const handleGenerate = (finalPrompt, tags = []) => {
-    dispatch(clearItinerary());
-    dispatch(generateItinerary({ prompt: finalPrompt, tags }));
-  };
+  const handleGenerate = ({ prompt, tags }) => {
+  dispatch(clearItinerary());
+  dispatch(generateItinerary({ prompt, tags }));
+};
+
 
   return (
     <>
@@ -90,7 +91,7 @@ export default function TripPlanningPage() {
       ? item.images[0].startsWith("/upload")
         ? `http://localhost:2807${item.images[0]}`
         : item.images[0]
-      : "/images/placeholder.png",
+      : "/images/placeholder.jpg",
     tags: item.tags || [],
     category: item.category?.name || "Spot",
     hasParking: item.parking_available,

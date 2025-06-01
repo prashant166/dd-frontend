@@ -6,6 +6,7 @@ const nextConfig = {
       "localhost",            // ✅ for /upload image paths during dev
       "lh3.googleusercontent.com", // optional Google profile images
       "images.unsplash.com",  // optional common CDN
+      'res.cloudinary.com'
     ],
   },
   webpack(config, { isServer }) {

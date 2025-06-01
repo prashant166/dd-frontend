@@ -2,14 +2,16 @@
 import { useState } from "react";
 
 const CATEGORIES = [
+  "Family-Friendly",
+  "Budget-Friendly",
+  "Near Metro",
+  "Photogenic",
   "Historical",
-  "Foodie",
+  "Night Views",
+  "Peaceful",
   "Nature",
-  "Shopping",
-  "Hidden Gems",
-  "Arts & Culture",
-  "Adventure",
-  "Local Markets",
+  "Romantic",
+  "Pet-Friendly",
 ];
 
 export default function UserPromptForm({ onGenerate }) {
@@ -31,7 +33,8 @@ export default function UserPromptForm({ onGenerate }) {
       ? `${input.trim()} (Preferences: ${selectedCategories.join(", ")})`
       : input.trim();
 
-    onGenerate(finalPrompt);
+    onGenerate({ prompt: finalPrompt, tags: selectedCategories });
+
   };
 
   return (

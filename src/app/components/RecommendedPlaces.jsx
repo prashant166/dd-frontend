@@ -2,19 +2,21 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { getPlaces } from "../../../redux/slices/placeSlice";
+import { getSuggestedPlaces } from "../../../redux/slices/placeSlice";
 import PlaceCard from "./PlaceCard";
 
 export default function RecommendedPlaces() {
   const scrollRef = useRef(null);
   const dispatch = useDispatch();
-  const { places } = useSelector((state) => state.place);
+  const { suggestedPlaces, loading } = useSelector((state) => state.place);
+
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
 
   useEffect(() => {
-    dispatch(getPlaces());
-  }, [dispatch]);
+  dispatch(getSuggestedPlaces());
+}, [dispatch]);
+
 
   const scroll = (direction) => {
     const current = scrollRef.current;
@@ -42,8 +44,6 @@ export default function RecommendedPlaces() {
     }
   }, []);
 
-  // 🌀 Randomly pick 8 approved places
-  const shuffled = [...places].sort(() => 0.5 - Math.random()).slice(0, 8);
 
   return (
     <section className="mt-20 px-4 relative">
@@ -65,29 +65,27 @@ export default function RecommendedPlaces() {
             ref={scrollRef}
             className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-2 scrollbar-hide"
           >
-            {shuffled.map((item) => {
-              const rawImage = item.images?.[0] || "";
-              const image = rawImage.startsWith("http")
-                ? rawImage
-                : rawImage.startsWith("/upload")
-                ? `http://localhost:2807${rawImage}`
-                : "/images/placeholder.png";
+            {loading ? (
+  <p className="text-gray-400">Loading suggestions...</p>
+) : (
+  suggestedPlaces.map((item) => {
+    const image = item.images?.[0] || "/images/placeholder.png";
 
-              return (
-                <PlaceCard
-                  key={item.id}
-                  place={{
-                    id: item.id,
-                    image,
-                    title: item.name,
-                    subtitle: item.category?.name || "Spot",
-                    // rating: "4.2", // Replace with real rating if available
-                    // reviews: 120, // Replace with real count if available
-                    location: item.location,
-                  }}
-                />
-              );
-            })}
+
+  return (
+    <PlaceCard
+      key={item.id}
+      place={{
+        id: item.id,
+        image,
+        title: item.name,
+        subtitle: item.category?.name || "Spot",
+        location: item.location,
+      }}
+      />
+    );
+  })
+)}
           </div>
 
           {showRightArrow && (
