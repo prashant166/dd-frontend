@@ -115,7 +115,7 @@ const handleSearch = () => {
   </div>
 </div>
 <p className="text-sm text-gray-500 mt-4 italic text-center px-4">
-  Try: “somewhere calm with art and chai” or “budget-friendly weekend escape”
+  Try: “somewhere calm with art or history” or “budget-friendly weekend escape”
 </p>
 
 
