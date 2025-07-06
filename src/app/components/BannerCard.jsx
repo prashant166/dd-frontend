@@ -10,7 +10,7 @@ export default function BannerCard() {
 
         {/* Background Image */}
         <img
-          src="/images/banner.png"
+          src="/images/Banner.png"
           alt="Hotel Banner"
           className="absolute inset-0 w-full h-full object-cover"
         />
