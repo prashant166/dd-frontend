@@ -19,10 +19,10 @@ export default function SignInContent({ onClose, onEmailClick }) {
       </h2>
 
       <div className="space-y-3">
-        <button className="w-full flex items-center justify-center gap-2 border rounded-full px-4 py-3 font-medium hover:bg-gray-100">
+        {/* <button className="w-full flex items-center justify-center gap-2 border rounded-full px-4 py-3 font-medium hover:bg-gray-100">
           <FaGoogle />
           Continue with Google
-        </button>
+        </button> */}
         <button onClick={onEmailClick} className="w-full flex items-center justify-center gap-2 border rounded-full px-4 py-3 font-medium hover:bg-gray-100">
           <FaEnvelope />
           Continue with email
