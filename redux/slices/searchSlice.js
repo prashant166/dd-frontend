@@ -4,7 +4,9 @@ import axios from "axios";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:2807/api/search";
 
 const initialState = {
-  searchResults: [],
+  placesByCategory: [],
+  moreSuggestedPlaces: [],
+  summaryText: "",
   loading: false,
   error: null,
   successMessage: null,
@@ -16,7 +18,7 @@ export const searchPlaces = createAsyncThunk(
   async (params, { rejectWithValue }) => {
     try {
       const res = await axios.get(API_URL, { params });
-      return res.data.places;
+      return res.data; // contains all 3: places_by_category, more_suggested_places, summary_text
     } catch (err) {
       return rejectWithValue(err.response?.data?.error || err.message);
     }
@@ -47,7 +49,9 @@ const searchSlice = createSlice({
       state.successMessage = null;
     },
     resetSearchResults: (state) => {
-      state.searchResults = [];
+      state.placesByCategory = [];
+      state.moreSuggestedPlaces = [];
+      state.summaryText = "";
     },
   },
   extraReducers: (builder) => {
@@ -58,7 +62,9 @@ const searchSlice = createSlice({
       })
       .addCase(searchPlaces.fulfilled, (state, action) => {
         state.loading = false;
-        state.searchResults = action.payload;
+        state.placesByCategory = action.payload.places_by_category || [];
+        state.moreSuggestedPlaces = action.payload.more_suggested_places || [];
+        state.summaryText = action.payload.summary_text || "";
       })
       .addCase(searchPlaces.rejected, (state, action) => {
         state.loading = false;

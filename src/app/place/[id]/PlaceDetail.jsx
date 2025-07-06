@@ -7,8 +7,9 @@ import { HeartIcon as OutlineHeart } from "@heroicons/react/24/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/24/solid";
 import { FaFemale } from "react-icons/fa";
 
-export default function PlaceDetail({ place, google_map_url }) {
+export default function PlaceDetail({ place }) {
   const imageSrc = place.images?.[0] || "/images/placeholder.png";
+  const { ai_summary } = place;
 
 
   return (
@@ -24,10 +25,10 @@ export default function PlaceDetail({ place, google_map_url }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-pink-800 text-sm bg-pink-50 border border-pink-300 rounded-md px-4 py-2 mb-5 max-w-md">
+          <div className="flex items-center gap-2 text-pink-800 text-sm bg-pink-50 border border-pink-300 rounded-md px-4 py-2 mb-5 max-w-lg">
             <FaFemale className="text-lg" />
             <span>
-              <strong>83%</strong> of women travelers said they felt safe here.
+             The contributor mentioned this place as <strong>safe for women</strong>.
             </span>
           </div>
 
@@ -56,9 +57,10 @@ export default function PlaceDetail({ place, google_map_url }) {
             💡 What’s special about this place? (AI-Powered Summary)
           </h2>
           <p className="text-sm text-gray-700">
-            This place offers a unique blend of historical architecture and lush
+            {/* This place offers a unique blend of historical architecture and lush
             greenery. Ideal for morning walks, quiet time, or photography
-            enthusiasts.
+            enthusiasts. */}
+            {ai_summary || "(Summary coming soon...)"}
           </p>
         </div>
 
@@ -108,7 +110,11 @@ export default function PlaceDetail({ place, google_map_url }) {
             lat: parseFloat(place.latitude),
             lng: parseFloat(place.longitude),
           }}
-          mapUrl={google_map_url}
+          mapUrl={place.google_map_url}
+              googleMapUrl={place.google_map_url}
+  nearbyCafes={place.nearbyCafes || []}
+  otherNearby={place.otherNearby || []}
+  location={place.location}
         />
       </div>
 

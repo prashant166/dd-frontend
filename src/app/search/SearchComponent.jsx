@@ -26,11 +26,14 @@ export default function SearchPage() {
   // const [loading, setLoading] = useState(true); 
     const dispatch = useDispatch();
 
-  const {
-    searchResults: items,
-    loading,
-    hasMore, // if you decide to implement pagination later
-  } = useSelector((state) => state.search);
+const {
+  placesByCategory = [],
+  moreSuggestedPlaces = [],
+  summaryText = "",
+  loading,
+  hasMore,
+} = useSelector((state) => state.search || {});
+
 
 
   //   useEffect(() => {
@@ -50,8 +53,23 @@ export default function SearchPage() {
   //   }, 800);
   // };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-white z-50">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+          <p className="text-orange-700 font-medium text-lg">
+            Matching your vibe with some great spots...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
+    
     <div className="max-w-6xl mx-auto px-4">
+      
        <h1 className="text-3xl font-bold mt-40 mb-2">Showing results for your mood</h1>
        <p className="text-gray-600 mb-6 text-base">
     Based on your vibe, we’ve curated some spots in Delhi that match what you're looking for. Go explore!
@@ -68,8 +86,7 @@ export default function SearchPage() {
   </div>
 
   <p className="mt-6">
-    Feeling artsy or craving something cozy? You might love <strong>Lodhi Garden</strong> for its peaceful vibe
-    and historical charm, or <strong>Ama Cafe</strong> in Majnu ka Tila for a warm cup with aesthetic views!
+    {summaryText || "We’re working on providing a unique AI-generated summary for each place. Stay tuned!"}
   </p>
 </div>
 
@@ -81,7 +98,7 @@ export default function SearchPage() {
         Array.from({ length: 6 }).map((_, i) => <SearchCardSkeleton key={i} />)
       ) : (
         <InfiniteScroll
-          dataLength={items.length}
+          dataLength={placesByCategory.length + moreSuggestedPlaces.length}
           hasMore={false} // disable for now
           loader={<SearchCardSkeleton />}
           endMessage={
@@ -90,11 +107,8 @@ export default function SearchPage() {
             </p>
           }
         >
-          {items.map((item) => {
-  const rawImage = item.images?.[0] || "";
+          {placesByCategory.map((item) => {
   const image = item.images?.[0] || "/images/placeholder.png";
-
-
   return (
     <SearchCard
       id={item.id}
@@ -110,6 +124,38 @@ export default function SearchPage() {
     />
   );
 })}
+
+{placesByCategory.length === 0 && moreSuggestedPlaces.length === 0 && (
+  <p className="text-center text-gray-500 mt-10">
+    No results found for your search. Try a different keyword or check back later!
+  </p>
+)}
+
+
+{moreSuggestedPlaces.length > 0 && (
+  <>
+    <h2 className="text-xl font-semibold mt-10 mb-4">More Suggested Places</h2>
+    {moreSuggestedPlaces.map((item) => {
+      const image = item.images?.[0] || "/images/placeholder.png";
+      return (
+        <SearchCard
+          id={item.id}
+          key={item.id}
+          image={image}
+          title={item.name}
+          location={item.location}
+          description={item.description}
+          tags={item.tags}
+          category={item.category?.name || "Other"}
+          hasParking={item.parking_available}
+          budget={`₹${item.entry_fee}`}
+        />
+      );
+    })}
+  </>
+)}
+
+
 
         </InfiniteScroll>
       )}

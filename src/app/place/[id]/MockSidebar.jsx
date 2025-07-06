@@ -19,7 +19,7 @@ export default function MockSidebar({ placeName }) {
     Estimated travel time from your location: <strong>25 mins</strong> (by car).
   </p>
   <a
-    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("PLACE NAME HERE")}`}
+    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(placeName)}`}
     target="_blank"
     rel="noopener noreferrer"
     className="inline-block bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-orange-700 transition"

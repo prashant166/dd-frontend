@@ -84,12 +84,34 @@ export default function StickyHeader() {
          <div className="flex-shrink-0 flex items-center gap-4">
             {/* Links on md+ */}
             <div className="hidden md:flex gap-6 text-sm font-semibold text-black">
-              {["Discover", "Trips", "Review"].map((label) => (
-                <a key={label} href="#" className="relative group pb-1">
-                  {label}
-                  <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-orange-600 group-hover:w-full transition-all duration-300"></span>
-                </a>
-              ))}
+              {["Start a Trip", "Contribute", "About Us"].map((label) => {
+            const customRoutes = {
+              "Start a Trip": "/trip-planning",
+              "Contribute": "/addplace",
+            };
+
+            const href = customRoutes[label] || `/${label.toLowerCase().replace(/\s+/g, '-')}`;
+
+              const handleProtectedNav = (e) => {
+    if (!userInfo && (label === "Start a Trip" || label === "Contribute")) {
+      e.preventDefault();
+      openOptions();
+    }
+  };
+
+
+            return (
+              <a
+                key={label}
+                href={href}
+                   onClick={handleProtectedNav}
+                className="relative group pb-1"
+              >
+                {label}
+                <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-orange-600 group-hover:w-full transition-all duration-300"></span>
+              </a>
+            );
+          })}
             </div>
 
             {/* Sign in or User dropdown */}
@@ -128,9 +150,33 @@ export default function StickyHeader() {
             </div>
 
             <nav className="flex flex-col gap-4 text-base font-medium">
-              <Link href="/trip-planning" onClick={() => setMobileNavOpen(false)}>Start a Trip</Link>
-              <Link href="/addplace" onClick={() => setMobileNavOpen(false)}>Contribute</Link>
-              <Link href="/about-us" onClick={() => setMobileNavOpen(false)}>About Us</Link>
+              <Link href="/trip-planning" onClick={(e) => {
+    if (!userInfo) {
+      e.preventDefault();
+      setMobileNavOpen(false);
+      openOptions();
+    } else {
+      setMobileNavOpen(false);
+    }
+  }}>Start a Trip</Link>
+              <Link href="/addplace"  onClick={(e) => {
+    if (!userInfo) {
+      e.preventDefault();
+      setMobileNavOpen(false);
+      openOptions();
+    } else {
+      setMobileNavOpen(false);
+    }
+  }}>Contribute</Link>
+              <Link href="/about-us"  onClick={(e) => {
+    if (!userInfo) {
+      e.preventDefault();
+      setMobileNavOpen(false);
+      openOptions();
+    } else {
+      setMobileNavOpen(false);
+    }
+  }}>About Us</Link>
 
               {!userInfo && (
                 <button
@@ -190,7 +236,7 @@ export default function StickyHeader() {
         ref={joinDialog}
         className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
       >
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+         <div className="flex flex-col items-center justify-center min-h-[100%]">
           <JoinDialog
             onClose={closeJoin}
             onLoginClick={() => {

@@ -72,10 +72,18 @@ export default function Navbar() {
 
             const href = customRoutes[label] || `/${label.toLowerCase().replace(/\s+/g, '-')}`;
 
+              const handleProtectedNav = (e) => {
+    if (!userInfo && (label === "Start a Trip" || label === "Contribute")) {
+      e.preventDefault();
+      openOptions();
+    }
+  };
+
             return (
               <a
                 key={label}
                 href={href}
+                onClick={handleProtectedNav}
                 className="relative group pb-1"
               >
                 {label}
@@ -136,9 +144,33 @@ export default function Navbar() {
 
       {/* Menu Links */}
       <nav className="flex flex-col gap-4 text-base font-medium">
-        <Link href="/trip-planning" onClick={() => setMobileNavOpen(false)}>Start a Trip</Link>
-        <Link href="/addplace" onClick={() => setMobileNavOpen(false)}>Contribute</Link>
-        <Link href="/about-us" onClick={() => setMobileNavOpen(false)}>About Us</Link>
+        <Link href="/trip-planning"   onClick={(e) => {
+    if (!userInfo) {
+      e.preventDefault();
+      setMobileNavOpen(false);
+      openOptions();
+    } else {
+      setMobileNavOpen(false);
+    }
+  }}>Start a Trip</Link>
+        <Link href="/addplace"   onClick={(e) => {
+    if (!userInfo) {
+      e.preventDefault();
+      setMobileNavOpen(false);
+      openOptions();
+    } else {
+      setMobileNavOpen(false);
+    }
+  }}>Contribute</Link>
+        <Link href="/about-us"   onClick={(e) => {
+    if (!userInfo) {
+      e.preventDefault();
+      setMobileNavOpen(false);
+      openOptions();
+    } else {
+      setMobileNavOpen(false);
+    }
+  }}>About Us</Link>
 
         {!userInfo && (
           <button
@@ -173,7 +205,7 @@ export default function Navbar() {
   ref={emailDialog}
   className="backdrop:bg-black/40 border-none p-0 rounded-xl max-w-md w-[90%]"
 >
-  <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-xl">
+   <div className="flex flex-col items-center justify-center min-h-[100%]">
     <EmailLoginDialog
       onClose={closeEmail}
       onForgotClick={() => {

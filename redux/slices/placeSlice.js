@@ -42,7 +42,7 @@ export const getPlaces = createAsyncThunk("place/getPlaces", async (_, { rejectW
 export const getPlaceById = createAsyncThunk("place/getPlaceById", async (id, { rejectWithValue }) => {
   try {
     const res = await axios.get(`${API_URL}/${id}`);
-    return res.data.place;
+    return res.data;
   } catch (err) {
     return rejectWithValue(err.response?.data?.error || err.message);
   }
@@ -142,8 +142,17 @@ const placeSlice = createSlice({
       })
 
       .addCase(getPlaceById.fulfilled, (state, action) => {
-        state.selectedPlace = action.payload;
-      })
+  const { place, google_map_url, nearbyCafes, otherNearby, ai_summary } = action.payload;
+
+  state.selectedPlace = {
+    ...place,
+    google_map_url,
+    nearbyCafes,
+    otherNearby,
+    ai_summary
+  };
+})
+
       .addCase(getPlaceById.rejected, (state, action) => {
         state.error = action.payload;
       })
