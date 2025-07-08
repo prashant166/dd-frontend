@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Poppins, Roboto_Mono } from "next/font/google";
 import Providers from "./components/Provider"; // ✅ Correct import path
+import { Analytics } from "@vercel/analytics/next"
 
 
 const poppins = Poppins({
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${poppins.variable} ${robotoMono.variable}`}>
       <Providers>{children}</Providers>
+      <Analytics />
       </body>
     </html>
   );
