@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:2807/api/search";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/search`;
+
 
 const initialState = {
   placesByCategory: [],

@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:2807/api/media";
+const API_URL = `${process.env.NEXT_PUBLIC_API_URL}/media`;
+
 
 const initialState = {
   images: [],
