@@ -51,9 +51,11 @@ export default function StickyHeader() {
     <>
       {/* Sticky Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm mt-[1.5px] md:mt-0">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
+        <div className="max-w-6xl mx-auto flex items-center px-4 sm:px-6 py-3 gap-4">
+
           {/* Left */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-shrink-0">
+
             {/* Hamburger - visible only on mobile */}
             <button className="block md:hidden" onClick={() => setMobileNavOpen(true)}>
               <FaBars className="w-5 h-5 text-black" />
@@ -69,7 +71,8 @@ export default function StickyHeader() {
           </div>
 
           {/* Center - Search */}
-          <div className="flex items-center w-full max-w-md bg-white rounded-full border border-gray-300 px-3 sm:px-4 py-2 shadow-sm mx-4">
+          <div className="flex items-center flex-grow bg-white rounded-full border border-gray-300 px-3 sm:px-4 py-2 shadow-sm">
+
             <FaSearch className="text-gray-400 mr-2" size={16} />
             <input
               type="text"
@@ -79,7 +82,8 @@ export default function StickyHeader() {
           </div>
 
           {/* Right - Links & Sign In/User */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 flex-shrink-0">
+
             {/* Links on md+ */}
             <div className="hidden md:flex gap-6 text-sm font-semibold text-black">
               {["Start a Trip", "Contribute", "About Us"].map((label) => {

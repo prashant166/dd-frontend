@@ -115,8 +115,6 @@ const handleSubmit = async (e) => {
       googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
       // libraries={["places"]}
     >
-      console.log("✅ API Key:", process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY);
-
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-8 space-y-10 mt-15">
         <h1 className="text-4xl font-bold">Add a place</h1>
 
