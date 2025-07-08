@@ -51,7 +51,7 @@ export default function SearchCard({
 
         {/* Tags and Buttons */}
         <div
-          className="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between"
+          className="mt-3 flex flex-wrap gap-y-2 sm:flex-nowrap sm:items-center sm:justify-between"
           onClick={(e) => e.stopPropagation()} // 🛑 Prevents routing on button click
         >
           <div className="flex flex-wrap gap-2 mb-2 sm:mb-0">
