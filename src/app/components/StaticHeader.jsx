@@ -71,7 +71,8 @@ export default function StickyHeader() {
           </div>
 
           {/* Center - Search */}
-          <div className="flex items-center flex-grow bg-white rounded-full border border-gray-300 px-3 sm:px-4 py-2 shadow-sm">
+          <div className="flex items-center flex-grow max-w-[60%] sm:max-w-none bg-white rounded-full border border-gray-300 px-3 sm:px-4 py-2 shadow-sm">
+
 
             <FaSearch className="text-gray-400 mr-2" size={16} />
             <input
