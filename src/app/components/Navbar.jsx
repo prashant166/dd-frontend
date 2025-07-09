@@ -36,7 +36,8 @@ export default function Navbar() {
     <>
     
       {/* Top Navbar */}
-      <nav className="max-w-6xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6 lg:px-12 shadow-sm relative">
+      <nav className="max-w-6xl mx-auto h-16 flex items-center justify-between px-4 sm:px-6 lg:px-12 shadow-sm relative min-w-0">
+
         {/* Left - Hamburger for mobile */}
         <button
           className="md:hidden"
@@ -100,7 +101,8 @@ export default function Navbar() {
           ) : (
             <button
               onClick={openOptions}
-              className="bg-black text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 transition"
+              className="bg-black text-white px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold hover:bg-gray-800 transition"
+
             >
               Sign in
             </button>

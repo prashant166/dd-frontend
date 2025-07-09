@@ -93,27 +93,28 @@ const handleSearch = () => {
 
 
       {/* Search Input */}
-      <div className="flex justify-center">
-  <div className="flex w-full max-w-3xl bg-white rounded-full shadow-md overflow-hidden px-6 py-4 items-center border border-gray-200">
-    <FaSearch className="text-gray-400 mr-3" />
+      <div className="flex justify-center px-2 sm:px-4">
+  <div className="flex w-full max-w-2xl bg-white rounded-full shadow-md overflow-hidden px-4 py-3 items-center border border-gray-200">
+    <FaSearch className="text-gray-400 mr-2 sm:mr-3" />
     <input
-  type="text"
-  value={query}
-  onChange={(e) => setQuery(e.target.value)}
-  placeholder="Places to go, things to do, hotels..."
-  className="flex-1 outline-none bg-transparent text-sm placeholder-gray-500"
-/>
-      <button onClick={handleSearch} className="ml-2 bg-orange-700 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-full transition flex items-center justify-center">
-        {/* Hide text on small screens, show only icon */}
-        <span className="block sm:hidden">
-          <FaSearch className="w-4 h-6" />
-        </span>
-        <span className="hidden sm:block">
-          Search
-        </span>
-      </button>
+      type="text"
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      placeholder="Places to go, things to do, or vibes to feel"
+      className="flex-1 outline-none bg-transparent text-sm placeholder-gray-500"
+    />
+    <button
+      onClick={handleSearch}
+      className="ml-2 bg-orange-700 hover:bg-orange-600 text-white font-semibold px-4 sm:px-6 py-2 rounded-full transition flex items-center justify-center min-w-[36px]"
+    >
+      <span className="block sm:hidden">
+        <FaSearch className="w-4 h-4" />
+      </span>
+      <span className="hidden sm:block">Search</span>
+    </button>
   </div>
 </div>
+
 <p className="text-sm text-gray-500 mt-4 italic text-center px-4">
   Try: “somewhere calm with art or history” or “budget-friendly weekend escape”
 </p>
