@@ -51,7 +51,7 @@ export default function UserDropdown() {
 
             <ul className="flex flex-col gap-1 px-4 py-4 text-gray-700 text-base">
               <li>
-                <a href="/start-trip" className="flex items-center gap-2 py-2 border-b">
+                <a href="/trip-planning" className="flex items-center gap-2 py-2 border-b">
                   <FaSuitcaseRolling className="w-4 h-4" />
                   Start a Trip
                 </a>
@@ -96,7 +96,7 @@ export default function UserDropdown() {
           <div className="hidden sm:absolute sm:right-0 sm:mt-2 sm:w-52 sm:bg-white sm:border sm:border-orange-200 sm:rounded-lg sm:shadow-lg sm:block">
             <ul className="py-2 text-sm text-gray-700">
               <li>
-                <a href="/start-trip" className="flex items-center gap-2 px-4 py-2 hover:bg-orange-50 transition">
+                <a href="/trip-planning" className="flex items-center gap-2 px-4 py-2 hover:bg-orange-50 transition">
                   <FaSuitcaseRolling className="w-4 h-4" />
                   Start a Trip
                 </a>
